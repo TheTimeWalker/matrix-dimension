@@ -45,23 +45,23 @@
     margin: 15px 15px 30px;
 
     .sticker-pack {
-      @media screen and (min-resolution: 3dppx), (min-width: 740px) {
-        .title {
-          font-size: 2em;
-        }
-
-        .license {
-          font-size: 1.2em;
-        }
-
-        .author {
-          font-size: 1.2em;
-        }
-      }
-
       .header {
         margin-top: 15px;
         margin-left: 3px;
+
+        @media screen and (min-resolution: 96dpi), (min-width: 740px) {
+          .title {
+            font-size: 2em;
+          }
+
+          .license {
+            font-size: 1.2em;
+          }
+
+          .author {
+            font-size: 1.2em;
+          }
+        }
 
         .title {
           font-weight: 700;
@@ -110,6 +110,12 @@
           img {
             height: 100%;
             width: 100%;
+          }
+
+          &:after {
+            content: "";
+            flex: auto;
+            flex-basis: 18%;
           }
         }
       }
