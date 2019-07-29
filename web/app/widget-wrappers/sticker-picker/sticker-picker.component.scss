@@ -96,6 +96,7 @@
         display: flex;
         flex-wrap: wrap;
         align-content: flex-start;
+        justify-content: space-between;
 
         .sticker {
           flex-grow: 1;
