@@ -49,7 +49,7 @@
         margin-top: 15px;
         margin-left: 3px;
 
-        @media screen and (min-resolution: 96dpi), (min-width: 740px) {
+        @media screen and (max-resolution: 96dpi), (min-width: 740px) {
           .title {
             font-size: 3em;
           }
