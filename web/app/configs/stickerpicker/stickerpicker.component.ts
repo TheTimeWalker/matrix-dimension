@@ -90,7 +90,7 @@ export class StickerpickerComponent implements OnInit {
             // Riot Android needs a room_id any time Dimension wants to fetch widgets
             const widgets = await this.scalarClient.getWidgets(SessionStorage.roomId);
             console.log("This is widgets:");
-            console.log(widgets);
+            console.log(widgets.response);
             const stickerPicker = widgets.response.find(w => w.content && w.content.type === "m.stickerpicker");
             const widgetId = stickerPicker ? ((<any>stickerPicker).id || stickerPicker.state_key) : "dimension-stickerpicker-" + (new Date().getTime());
 
