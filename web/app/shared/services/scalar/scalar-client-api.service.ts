@@ -46,10 +46,13 @@ export class ScalarClientApiService {
         });
     }
 
-    public getWidgets(roomId?: string): Promise<WidgetsResponse> {
-        return this.callAction("get_widgets", {
+    public async getWidgets(roomId?: string): Promise<WidgetsResponse> {
+        console.log("getWidgets start");
+        let test = await this.callAction("get_widgets", {
             room_id: roomId
         });
+        console.log(test);
+        return test;
     }
 
     public setWidget(roomId: string, widget: EditableWidget): Promise<ScalarSuccessResponse> {
@@ -121,6 +124,7 @@ export class ScalarClientApiService {
     }
 
     private callAction(action, payload): Promise<any> {
+        console.log("calling action");
         let requestKey = randomString({length: 20});
         return new Promise((resolve, reject) => {
             if (!window.opener) {
@@ -128,16 +132,19 @@ export class ScalarClientApiService {
                 reject({response: {error: {message: "No window.opener", _error: new Error("No window.opener")}}});
                 return;
             }
+            console.log("windows opener ok");
 
             ScalarClientApiService.actionMap[requestKey] = {
                 resolve: resolve,
                 reject: reject
             };
 
+            console.log("creating request");
             let request = JSON.parse(JSON.stringify(payload));
             request["request_id"] = requestKey;
             request["action"] = action;
 
+            console.log("let's postmessage");
             window.opener.postMessage(request, "*");
         });
     }
@@ -145,14 +152,18 @@ export class ScalarClientApiService {
 
 // Register the event listener here to ensure it gets created
 window.addEventListener("message", event => {
+    console.log("check data");
     if (!event.data) return;
 
+    console.log("check requestKey");
     let requestKey = event.data["request_id"];
     if (!requestKey) return;
 
+    console.log("check action");
     let action = ScalarClientApiService.getAndRemoveActionHandler(requestKey);
     if (!action) return;
 
+    console.log(event.data);
     if (event.data.response && event.data.response.error) action.reject(event.data);
     else action.resolve(event.data);
 });
