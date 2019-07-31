@@ -4,6 +4,7 @@ import { StickerApiService } from "../../shared/services/integrations/sticker-ap
 import { ToasterService } from "angular2-toaster";
 import { MediaService } from "../../shared/services/media.service";
 import { ScalarClientApiService } from "../../shared/services/scalar/scalar-client-api.service";
+import { SessionStorage } from "../../shared/SessionStorage";
 import { WIDGET_STICKER_PICKER } from "../../shared/models/widget";
 
 @Component({
@@ -86,7 +87,8 @@ export class StickerpickerComponent implements OnInit {
 
     private async addWidget() {
         try {
-            const widgets = await this.scalarClient.getWidgets();
+            // Riot Android needs a room_id any time Dimension wants to fetch widgets
+            const widgets = await this.scalarClient.getWidgets(SessionStorage.roomId);
             const stickerPicker = widgets.response.find(w => w.content && w.content.type === "m.stickerpicker");
             const widgetId = stickerPicker ? ((<any>stickerPicker).id || stickerPicker.state_key) : "dimension-stickerpicker-" + (new Date().getTime());
 
