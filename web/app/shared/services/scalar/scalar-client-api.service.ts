@@ -161,7 +161,7 @@ window.addEventListener("message", event => {
 
     console.log("check action");
     let action = ScalarClientApiService.getAndRemoveActionHandler(requestKey);
-    if (!action) return;
+    if (!action || event.data["action"] === "get_widgets") return;
 
     console.log("---------");
     console.log(requestKey);
