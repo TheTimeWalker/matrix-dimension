@@ -159,7 +159,7 @@ window.addEventListener("message", event => {
     console.log("---------");
     
     console.log("check data");
-    if (!event.data) return;
+    if (!event.data || !event.data.response) return;
 
     console.log("check requestKey");
     let requestKey = event.data["request_id"];
@@ -167,7 +167,7 @@ window.addEventListener("message", event => {
 
     console.log("check action");
     let action = ScalarClientApiService.getAndRemoveActionHandler(requestKey);
-    if (!action || event.data["action"] === "get_widgets") return;
+    if (!action) return;
 
     if (event.data.response && event.data.response.error) {
         console.log("Shit");
