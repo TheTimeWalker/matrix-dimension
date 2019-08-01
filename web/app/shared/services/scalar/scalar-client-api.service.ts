@@ -163,7 +163,12 @@ window.addEventListener("message", event => {
     let action = ScalarClientApiService.getAndRemoveActionHandler(requestKey);
     if (!action) return;
 
-    console.log(event.data.response);
+    console.log("---------");
+    console.log(requestKey);
+    console.log(event.data["action"]);
+    console.log(event.data.toString());
+    console.log("-------");
+
     if (event.data.response && event.data.response.error) {
         console.log("Shit");
         console.log(event.data.response.error);
