@@ -159,7 +159,8 @@ window.addEventListener("message", event => {
     console.log("---------");
     
     console.log("check data");
-    if (!event.data || !event.data.response) return;
+    if (!event.data) return;
+    if (event.data["action"] && !event.data.response) return;
 
     console.log("check requestKey");
     let requestKey = event.data["request_id"];
