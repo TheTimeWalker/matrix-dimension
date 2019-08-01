@@ -160,7 +160,7 @@ window.addEventListener("message", event => {
     
     console.log("check data");
     if (!event.data) return;
-    if (event.data["action"] && !event.data.response) return;
+    if (event.data["action"] === "get_widgets" && !event.data.response) return;
 
     console.log("check requestKey");
     let requestKey = event.data["request_id"];
