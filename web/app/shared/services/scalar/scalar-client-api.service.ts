@@ -152,6 +152,12 @@ export class ScalarClientApiService {
 
 // Register the event listener here to ensure it gets created
 window.addEventListener("message", event => {
+    console.log("---------");
+    console.log(event.data["request_id"]);
+    console.log(event.data["action"]);
+    console.log(JSON.stringify(event.data));
+    console.log("---------");
+    
     console.log("check data");
     if (!event.data) return;
 
@@ -162,12 +168,6 @@ window.addEventListener("message", event => {
     console.log("check action");
     let action = ScalarClientApiService.getAndRemoveActionHandler(requestKey);
     if (!action || event.data["action"] === "get_widgets") return;
-
-    console.log("---------");
-    console.log(requestKey);
-    console.log(event.data["action"]);
-    console.log(event.data.toString());
-    console.log("-------");
 
     if (event.data.response && event.data.response.error) {
         console.log("Shit");
