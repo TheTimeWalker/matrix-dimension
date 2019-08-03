@@ -46,8 +46,8 @@ export class ScalarClientApiService {
         });
     }
 
-    public getWidgets(roomId?: string): Promise<WidgetsResponse> {
-        return this.callAction("get_widgets", {
+    public async getWidgets(roomId?: string): Promise<WidgetsResponse> {
+        return await this.callAction("get_widgets", {
             room_id: roomId
         });
     }
@@ -121,6 +121,7 @@ export class ScalarClientApiService {
     }
 
     private callAction(action, payload): Promise<any> {
+        console.log("calling action");
         let requestKey = randomString({length: 20});
         return new Promise((resolve, reject) => {
             if (!window.opener) {
@@ -146,6 +147,10 @@ export class ScalarClientApiService {
 // Register the event listener here to ensure it gets created
 window.addEventListener("message", event => {
     if (!event.data) return;
+
+    // HACK: Riot Android gives two messages out. First one without response and second one with response.
+    // This should only solve replacing sticker picker for mobile only users.
+    if (event.data["action"] === "get_widgets" && !event.data.response) return;
 
     let requestKey = event.data["request_id"];
     if (!requestKey) return;
