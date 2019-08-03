@@ -146,11 +146,12 @@ export class ScalarClientApiService {
 
 // Register the event listener here to ensure it gets created
 window.addEventListener("message", event => {
+    console.log("RECEIVED MESSAGE:");
     if (!event.data) return;
 
     // HACK: Riot Android gives two messages out. First one without response and second one with response.
     // This should only solve replacing sticker picker for mobile only users.
-    if (event.data["action"] === "get_widgets" && !event.data.response) return;
+    console.log(JSON.stringify(event));
 
     let requestKey = event.data["request_id"];
     if (!requestKey) return;
